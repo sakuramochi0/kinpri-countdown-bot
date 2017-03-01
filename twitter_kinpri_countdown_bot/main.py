@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import datetime
+import argparse
 
 from dateutil.parser import parse
 
@@ -49,4 +50,11 @@ def get_text(days):
 
 
 if __name__ == '__main__':
-    tweet()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--debug', '-d', action='store_true')
+    args = parser.args()
+
+    if args.debug:
+        tweet('sakuramochi_pre')
+    else:
+        tweet()
