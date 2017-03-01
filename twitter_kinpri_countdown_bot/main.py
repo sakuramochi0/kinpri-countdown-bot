@@ -38,7 +38,8 @@ def get_text(days):
                 'あと {days} 日です{exclamation} #kinpri').format(
                     days=days, exclamation=exclamation)
     elif days == 0:
-        text = '🎉🌈 今日は『KING OF PRISM -PRIDE the HERO-』の公開日です！！！ 🌈🎉 #kinpri'
+        text = ('✨🎉🌈 ！！！今日は『KING OF PRISM -PRIDE the HERO-』の'
+                '公開日です！！！ 🌈🎉✨ #kinpri')
     else:
         days *= -1
         text = ('『KING OF PRISM -PRIDE the HERO-』公開から、'
