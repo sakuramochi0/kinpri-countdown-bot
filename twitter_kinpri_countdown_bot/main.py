@@ -28,24 +28,33 @@ def tweet(screen_name='kinpricountdown'):
 
 
 def get_text(days):
+    # make the number of exclamation marks different
+    # depanding on the remaining days
     if days % 10 == 0 or abs(days) < 10:
         exclamation_num = 2
     else:
         exclamation_num = 1
     exclamation = '！' * exclamation_num
 
+    # add an additinal space character when afternoon
+    # to avoid a duplicate status restriction
+    if datetime.datetime.now().hour >= 12:
+        space = ' '
+    else:
+        space = ''
+
     if days > 0:
         text = ('『KING OF PRISM -PRIDE the HERO-』公開まで、'
-                'あと {days} 日です{exclamation} #kinpri').format(
-                    days=days, exclamation=exclamation)
+                'あと {days} 日です{exclamation} {space}#kinpri').format(
+                    days=days, exclamation=exclamation, space=space)
     elif days == 0:
         text = ('✨🎉🌈 ！！！今日は『KING OF PRISM -PRIDE the HERO-』の'
-                '公開日です！！！ 🌈🎉✨ #kinpri')
+                '公開日です！！！ 🌈🎉✨ {space}#kinpri').format(space=space)
     else:
         days *= -1
         text = ('『KING OF PRISM -PRIDE the HERO-』公開から、'
-                '{days} 日が経過しました{exclamation} #kinpri').format(
-                    days=days, exclamation=exclamation)
+                '{days} 日が経過しました{exclamation} {space}#kinpri').format(
+                    days=days, exclamation=exclamation, space=space)
     return text
 
 
