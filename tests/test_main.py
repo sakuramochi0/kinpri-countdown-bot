@@ -35,26 +35,46 @@ class TestGetText:
 
     def test_11days_before(self):
         text = get_text(11)
-        assert text == ('『KING OF PRISM -PRIDE the HERO-』公開まで、'
-                        'あと 11 日です！ #kinpri')
+        if datetime.datetime.now().hour >= 12:
+            assert text == ('『KING OF PRISM -PRIDE the HERO-』公開まで、'
+                            'あと 11 日です！  #kinpri')
+        else:
+            assert text == ('『KING OF PRISM -PRIDE the HERO-』公開まで、'
+                            'あと 11 日です！ #kinpri')
 
     def test_10days_before(self):
         text = get_text(10)
-        assert text == ('『KING OF PRISM -PRIDE the HERO-』公開まで、'
-                        'あと 10 日です！！ #kinpri')
+        if datetime.datetime.now().hour >= 12:
+            assert text == ('『KING OF PRISM -PRIDE the HERO-』公開まで、'
+                            'あと 10 日です！！  #kinpri')
+        else:
+            assert text == ('『KING OF PRISM -PRIDE the HERO-』公開まで、'
+                            'あと 10 日です！！ #kinpri')
 
     def test_just_day(self):
         text = get_text(0)
-        assert text == \
-            ('✨🎉🌈 ！！！今日は『KING OF PRISM -PRIDE the HERO-』の公開日です！！！ 🌈🎉✨'
-             ' #kinpri')
+        if datetime.datetime.now().hour >= 12:
+            assert text == \
+                ('✨🎉🌈 ！！！今日は『KING OF PRISM -PRIDE the HERO-』の公開日です！！！ 🌈🎉✨'
+                 '  #kinpri')
+        else:
+                ('✨🎉🌈 ！！！今日は『KING OF PRISM -PRIDE the HERO-』の公開日です！！！ 🌈🎉✨'
+                 ' #kinpri')
 
     def test_10days_after(self):
         text = get_text(-10)
-        assert text == ('『KING OF PRISM -PRIDE the HERO-』公開から、'
-                        '10 日が経過しました！！ #kinpri')
+        if datetime.datetime.now().hour >= 12:
+            assert text == ('『KING OF PRISM -PRIDE the HERO-』公開から、'
+                            '10 日が経過しました！！  #kinpri')
+        else:
+            assert text == ('『KING OF PRISM -PRIDE the HERO-』公開から、'
+                            '10 日が経過しました！！ #kinpri')
 
     def test_11days_after(self):
         text = get_text(-11)
-        assert text == ('『KING OF PRISM -PRIDE the HERO-』公開から、'
-                        '11 日が経過しました！ #kinpri')
+        if datetime.datetime.now().hour >= 12:
+            assert text == ('『KING OF PRISM -PRIDE the HERO-』公開から、'
+                            '11 日が経過しました！  #kinpri')
+        else:
+            assert text == ('『KING OF PRISM -PRIDE the HERO-』公開から、'
+                            '11 日が経過しました！ #kinpri')
