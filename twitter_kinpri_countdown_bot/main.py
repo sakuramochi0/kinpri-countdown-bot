@@ -35,6 +35,7 @@ def get_text(days):
     else:
         exclamation_num = 1
     exclamation = '！' * exclamation_num
+    exclamation_ko = '!' * exclamation_num
 
     # add an additinal space character when afternoon
     # to avoid a duplicate status restriction
@@ -44,17 +45,29 @@ def get_text(days):
         space = ''
 
     if days > 0:
-        text = ('『KING OF PRISM -PRIDE the HERO-』公開まで、'
-                'あと {days} 日です{exclamation} {space}#kinpri').format(
-                    days=days, exclamation=exclamation, space=space)
+        text = ('『KING OF PRISM -PRIDE the HERO-』\n'
+                '公開まで、あと {days} 日です{exclamation}\n'
+                '공개까지 앞으로 {days} 일입니다{exclamation_ko}\n'
+                '{space}#kinpri').format(
+                    days=days,
+                    exclamation=exclamation,
+                    exclamation_ko=exclamation_ko,
+                    space=space)
     elif days == 0:
-        text = ('✨🎉🌈 ！！！今日は『KING OF PRISM -PRIDE the HERO-』の'
-                '公開日です！！！ 🌈🎉✨ {space}#kinpri').format(space=space)
+        text = ('✨🎉🌈 『KING OF PRISM -PRIDE the HERO-』 🌈🎉✨\n'
+                '公開日です！！！！！\n'
+                '공개 일입니다!!!!!\n'
+                '{space}#kinpri').format(space=space)
     else:
         days *= -1
-        text = ('『KING OF PRISM -PRIDE the HERO-』公開から、'
-                '{days} 日が経過しました{exclamation} {space}#kinpri').format(
-                    days=days, exclamation=exclamation, space=space)
+        text = ('『KING OF PRISM -PRIDE the HERO-』\n'
+                '公開から、{days} 日が経過しました{exclamation}\n'
+                '개봉 후 {days} 일 경과했습니다{exclamation_ko}\n'
+                '{space}#kinpri').format(
+                    days=days,
+                    exclamation=exclamation,
+                    exclamation_ko=exclamation_ko,
+                    space=space)
     return text
 
 
