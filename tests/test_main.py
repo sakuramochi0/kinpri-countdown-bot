@@ -63,11 +63,16 @@ class TestGetText:
         text = get_text(0)
         if datetime.datetime.now().hour >= 12:
             assert text == \
-                ('✨🎉🌈 ！！！今日は『KING OF PRISM -PRIDE the HERO-』の公開日です！！！ 🌈🎉✨'
-                 '  #kinpri')
-        else:
-                ('✨🎉🌈 ！！！今日は『KING OF PRISM -PRIDE the HERO-』の公開日です！！！ 🌈🎉✨'
+                ('✨🎉🌈 『KING OF PRISM -PRIDE the HERO-』 🌈🎉✨\n'
+                 '公開日です！！！！！\n'
+                 '공개 일입니다!!!!!\n'
                  ' #kinpri')
+        else:
+            assert text == \
+                ('✨🎉🌈 『KING OF PRISM -PRIDE the HERO-』 🌈🎉✨\n'
+                 '公開日です！！！！！\n'
+                 '공개 일입니다!!!!!\n'
+                 '#kinpri')
 
     def test_10days_after(self):
         text = get_text(-10)
