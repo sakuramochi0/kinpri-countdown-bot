@@ -30,7 +30,9 @@ def tweet(screen_name='kinpricountdown'):
 def get_text(days):
     # make the number of exclamation marks different
     # depanding on the remaining days
-    if days % 10 == 0 or abs(days) < 10:
+    if 0 < days <= 10:
+        exclamation_num = 3
+    elif days % 10 == 0:
         exclamation_num = 2
     else:
         exclamation_num = 1
