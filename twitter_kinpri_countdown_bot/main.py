@@ -40,7 +40,7 @@ def get_text(days):
     # add an additinal space characters
     # to avoid a duplicate status restriction
     # there are 4 cases: 0-6 / 6-12 / 12-18 / 18-24
-    space = ' ' * (datetime.datetime.now().hour % 12)
+    space = ' ' * (datetime.datetime.now().hour // 6 % 4)
 
     if days > 0:
         text = ('『KING OF PRISM -PRIDE the HERO-』\n'
