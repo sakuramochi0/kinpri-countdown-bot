@@ -37,12 +37,10 @@ def get_text(days):
     exclamation = '！' * exclamation_num
     exclamation_ko = '!' * exclamation_num
 
-    # add an additinal space character when afternoon
+    # add an additinal space characters
     # to avoid a duplicate status restriction
-    if datetime.datetime.now().hour >= 12:
-        space = ' '
-    else:
-        space = ''
+    # there are 4 cases: 0-6 / 6-12 / 12-18 / 18-24
+    space = ' ' * (datetime.datetime.now().hour % 12)
 
     if days > 0:
         text = ('『KING OF PRISM -PRIDE the HERO-』\n'
