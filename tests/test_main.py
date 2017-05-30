@@ -48,8 +48,8 @@ class TestGetText:
         text = get_text(10)
         space = self.get_space()
         assert text == ('『KING OF PRISM -PRIDE the HERO-』\n'
-                        '公開まで、あと 10 日です！！\n'
-                        '공개까지 앞으로 10 일입니다!!\n'
+                        '公開まで、あと 10 日です！！！\n'
+                        '공개까지 앞으로 10 일입니다!!!\n'
                         '{}#kinpri'.format(space))
 
     def test_just_day(self):
