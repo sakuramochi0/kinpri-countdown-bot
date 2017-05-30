@@ -33,9 +33,12 @@ class TestGetRemainingDays:
 
 class TestGetText:
 
+    def get_space(self):
+        return ' ' * (datetime.datetime.now().hour // 6 % 4)
+        
     def test_11days_before(self):
         text = get_text(11)
-        space = ' ' * (datetime.datetime.now().hour % 12)
+        space = self.get_space()
         assert text == ('『KING OF PRISM -PRIDE the HERO-』\n'
                         '公開まで、あと 11 日です！\n'
                         '공개까지 앞으로 11 일입니다!\n'
@@ -43,7 +46,7 @@ class TestGetText:
 
     def test_10days_before(self):
         text = get_text(10)
-        space = ' ' * (datetime.datetime.now().hour % 12)
+        space = self.get_space()
         assert text == ('『KING OF PRISM -PRIDE the HERO-』\n'
                         '公開まで、あと 10 日です！！\n'
                         '공개까지 앞으로 10 일입니다!!\n'
@@ -51,7 +54,7 @@ class TestGetText:
 
     def test_just_day(self):
         text = get_text(0)
-        space = ' ' * (datetime.datetime.now().hour % 12)
+        space = self.get_space()
         assert text == \
             ('✨🎉🌈 『KING OF PRISM -PRIDE the HERO-』 🌈🎉✨\n'
              '公開日です！！！！！\n'
@@ -60,7 +63,7 @@ class TestGetText:
 
     def test_10days_after(self):
         text = get_text(-10)
-        space = ' ' * (datetime.datetime.now().hour % 12)
+        space = self.get_space()
         assert text == ('『KING OF PRISM -PRIDE the HERO-』\n'
                         '公開から、10 日が経過しました！！\n'
                         '개봉 후 10 일 경과했습니다!!\n'
@@ -68,7 +71,7 @@ class TestGetText:
 
     def test_11days_after(self):
         text = get_text(-11)
-        space = ' ' * (datetime.datetime.now().hour % 12)
+        space = self.get_space()
         assert text == ('『KING OF PRISM -PRIDE the HERO-』\n'
                         '公開から、11 日が経過しました！\n'
                         '개봉 후 11 일 경과했습니다!\n'
