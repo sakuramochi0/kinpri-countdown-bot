@@ -24,7 +24,21 @@ def tweet(screen_name='kinpricountdown'):
     api = get_api(screen_name)
     days = get_remaining_days()
     text = get_text(days)
-    return api.update_status(text)
+    img = get_img(days)
+    if img:
+        res = api.update_with_media(img, status=text)
+    else:
+        res = api.update_status(text)
+    return res
+
+
+def get_img(days):
+    # prepare images if 0 <= days <= 5
+    if 0 <= days <= 5:
+        img = 'img/kinpri-countdown-{}.png'.format(days)
+    else:
+        img = None
+    return img
 
 
 def get_text(days):
