@@ -47,6 +47,15 @@ def tweet(screen_name='kinpricountdown'):
     return res
 
 
+def tweet_second(screen_name='kinpricountdown'):
+    api = get_api(screen_name)
+    days = get_remaining_days()
+    hours = get_remaining_hours()
+    text = get_text(days, hours)
+    res = api.update_status(text)
+    return res
+
+
 def get_img(days):
     # prepare images if 0 <= days <= 5
     if 0 <= days <= 5:
@@ -77,7 +86,16 @@ def get_text(days, hours):
     # there are 4 cases: 0-6 / 6-12 / 12-18 / 18-24
     space = ' ' * (datetime.datetime.now().hour // 6 % 4)
 
-    if days > 0:
+    if args.second:
+        text = ('『KING OF PRISM -PRIDE the HERO-』\n'
+                '7/22(土)上映開始劇場での公開まで\n'
+                'あと {days} 日です{exclamation}\n'
+                '#kinpri #prettyrhythm').format(
+                    days=days,
+                    exclamation=exclamation,
+                    exclamation_ko=exclamation_ko,
+                )
+    elif days > 0:
         if is_hours_countdown(hours):
             text = ('『KING OF PRISM -PRIDE the HERO-』\n'
                     '公開まで、あと {hours} 時間です{exclamation}\n'
@@ -117,9 +135,19 @@ def get_text(days, hours):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--debug', '-d', action='store_true')
+    parser.add_argument('--second', action='store_true')
     args = parser.parse_args()
 
-    if args.debug:
-        tweet('sakuramochi_pre')
+    if args.second:
+        # make release date 2017/07/22
+        RELEASE_DATE += datetime.timedelta(days=42)
+        RELEASE_DATETIME += datetime.timedelta(days=42)
+        if args.debug:
+            tweet_second('sakuramochi_pre')
+        else:
+            tweet_second()
     else:
-        tweet()
+        if args.debug:
+            tweet('sakuramochi_pre')
+        else:
+            tweet()
