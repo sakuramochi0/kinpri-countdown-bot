@@ -70,6 +70,10 @@ def is_hours_countdown(hours):
 
 
 def get_text(days, hours):
+    # 「○日経過しました」ではなく、「○日目です」とツイートするための修正。
+    # これによって、公開日以前が正しくなくなってしまっている。
+    days -= 1
+    
     # make the number of exclamation marks different
     # depanding on the remaining days
     if 0 < days <= 10:
@@ -80,6 +84,12 @@ def get_text(days, hours):
         exclamation_num = 1
     exclamation = '！' * exclamation_num
     exclamation_ko = '!' * exclamation_num
+
+    # 100の倍数の時にクラッカーを鳴らす🎉✨
+    if days % 100 == 0:
+        celebration = '👑🌹🎉🌈✨'
+    else:
+        celebration = ''
 
     # add an additinal space characters
     # to avoid a duplicate status restriction
@@ -121,14 +131,17 @@ def get_text(days, hours):
                 '{space}#kinpri #prettyrhythm').format(space=space)
     else:
         days *= -1
-        text = ('『KING OF PRISM -PRIDE the HERO-』\n'
-                '公開から、{days} 日が経過しました{exclamation}\n'
-                '개봉 후 {days} 일 경과했습니다{exclamation_ko}\n'
+        text = ('{celebration}\n'
+                '『KING OF PRISM -PRIDE the HERO-』\n'
+                '今日は公開 {days} 日目です{exclamation}\n'
+                '오늘은 공개 {days} 일째입니다{exclamation_ko}\n'
                 '{space}#kinpri #prettyrhythm').format(
                     days=days,
+                    celebration=celebration,
                     exclamation=exclamation,
                     exclamation_ko=exclamation_ko,
                     space=space)
+
     return text
 
 
