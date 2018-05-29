@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 import datetime
 import argparse
-
 from dateutil.parser import parse
-
 from get_tweepy import get_api
-
 
 # if now is 00:00:00, remaining days would be greater than 1 day
 # so we must minus 1
@@ -73,7 +70,7 @@ def get_text(days, hours):
     # 「○日経過しました」ではなく、「○日目です」とツイートするための修正。
     # これによって、公開日以前が正しくなくなってしまっている。
     days -= 1
-    
+
     # make the number of exclamation marks different
     # depanding on the remaining days
     if 0 < days <= 10:
@@ -101,29 +98,29 @@ def get_text(days, hours):
                 '7/22(土)上映開始劇場での公開まで\n'
                 'あと {days} 日です{exclamation}\n'
                 '#kinpri #prettyrhythm').format(
-                    days=days,
-                    exclamation=exclamation,
-                    exclamation_ko=exclamation_ko,
-                )
+            days=days,
+            exclamation=exclamation,
+            exclamation_ko=exclamation_ko,
+        )
     elif days > 0:
         if is_hours_countdown(hours):
             text = ('『KING OF PRISM -PRIDE the HERO-』\n'
                     '公開まで、あと {hours} 時間です{exclamation}\n'
                     '공개까지 앞으로 {hours} 시간입니다{exclamation_ko}\n'
                     '#kinpri #prettyrhythm').format(
-                        hours=hours,
-                        exclamation=exclamation,
-                        exclamation_ko=exclamation_ko,
-                    )
+                hours=hours,
+                exclamation=exclamation,
+                exclamation_ko=exclamation_ko,
+            )
         else:
             text = ('『KING OF PRISM -PRIDE the HERO-』\n'
                     '公開まで、あと {days} 日です{exclamation}\n'
                     '공개까지 앞으로 {days} 일입니다{exclamation_ko}\n'
                     '{space}#kinpri #prettyrhythm').format(
-                        days=days,
-                        exclamation=exclamation,
-                        exclamation_ko=exclamation_ko,
-                        space=space)
+                days=days,
+                exclamation=exclamation,
+                exclamation_ko=exclamation_ko,
+                space=space)
     elif days == 0:
         text = ('✨🎉🌈 『KING OF PRISM -PRIDE the HERO-』 🌈🎉✨\n'
                 '公開日です！！！！！\n'
@@ -136,11 +133,11 @@ def get_text(days, hours):
                 '今日は公開 {days} 日目です{exclamation}\n'
                 '오늘은 공개 {days} 일째입니다{exclamation_ko}\n'
                 '{space}#kinpri #prettyrhythm').format(
-                    days=days,
-                    celebration=celebration,
-                    exclamation=exclamation,
-                    exclamation_ko=exclamation_ko,
-                    space=space)
+            days=days,
+            celebration=celebration,
+            exclamation=exclamation,
+            exclamation_ko=exclamation_ko,
+            space=space)
 
     return text
 
