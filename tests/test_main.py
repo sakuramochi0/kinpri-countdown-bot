@@ -7,64 +7,64 @@ class TestGetRemainingDays:
 
     def test_specs(self):
         assert get_remaining_days() == \
-               (parse('2017-06-10') - datetime.datetime.now()).days + 1
+               (parse('2019-03-02') - datetime.datetime.now()).days + 1
 
     def test_10days_before(self):
-        assert get_remaining_days(parse('2017-05-31 0:0:0')) == 10
+        assert get_remaining_days(parse('2019-02-20 0:0:0')) == 10
 
     def test_10days_before_plus_1sec(self):
-        assert get_remaining_days(parse('2017-05-31 0:0:10')) == 10
+        assert get_remaining_days(parse('2019-02-20 0:0:10')) == 10
 
     def test_10days_before_at_noon(self):
-        assert get_remaining_days(parse('2017-05-31 12:0:10')) == 10
+        assert get_remaining_days(parse('2019-02-20 12:0:10')) == 10
 
     def test_just_day_plus_1sec(self):
-        assert get_remaining_days(parse('2017-06-10 0:0:10')) == 0
+        assert get_remaining_days(parse('2019-03-02 0:0:10')) == 0
 
     def test_just_day(self):
-        assert get_remaining_days(parse('2017-06-10 0:0:0')) == 0
+        assert get_remaining_days(parse('2019-03-02 0:0:0')) == 0
 
     def test_10days_after(self):
-        assert get_remaining_days(parse('2017-06-20 0:0:0')) == -10
+        assert get_remaining_days(parse('2019-03-12 0:0:0')) == -10
 
     def test_10days_after_plus_1sec(self):
-        assert get_remaining_days(parse('2017-06-20 0:0:10')) == -10
+        assert get_remaining_days(parse('2019-03-12 0:0:10')) == -10
 
 
 class TestGetRemainingHours:
 
     def test_1days_before(self):
-        assert get_remaining_hours(parse('2017-06-09 0:0:0')) == 24
+        assert get_remaining_hours(parse('2019-03-01 00:00:00')) == 24
 
     def test_12hours_before(self):
-        assert get_remaining_hours(parse('2017-06-09 12:0:0')) == 12
+        assert get_remaining_hours(parse('2019-03-01 12:00:00')) == 12
 
     def test_12hours_30min_before(self):
-        assert get_remaining_hours(parse('2017-06-09 12:30:0')) == 11
+        assert get_remaining_hours(parse('2019-03-01 12:30:00')) == 11
 
     def test_23hours_before(self):
-        assert get_remaining_hours(parse('2017-06-09 1:0:0')) == 23
+        assert get_remaining_hours(parse('2019-03-01 01:00:00')) == 23
 
     def test_2days_before(self):
-        assert get_remaining_hours(parse('2017-06-08 0:0:0')) == 48
+        assert get_remaining_hours(parse('2019-02-28 00:00:00')) == 48
 
     def test_1days_before_plus_10_min(self):
-        assert get_remaining_hours(parse('2017-06-08 23:50:00')) == 24
+        assert get_remaining_hours(parse('2019-02-28 23:50:00')) == 24
 
     def test_10days_before_at_noon(self):
-        assert get_remaining_hours(parse('2017-05-31 12:0:10')) == 240 - 12
+        assert get_remaining_hours(parse('2019-02-20 12:00:00')) == 240 - 12
 
     def test_just_day_plus_1sec(self):
-        assert get_remaining_hours(parse('2017-06-10 0:0:10')) == 0
+        assert get_remaining_hours(parse('2019-03-02 00:00:01')) == 0
 
     def test_just_day(self):
-        assert get_remaining_hours(parse('2017-06-10 0:0:0')) == 0
+        assert get_remaining_hours(parse('2019-03-02 0:0:0')) == 0
 
     def test_10days_after(self):
-        assert get_remaining_hours(parse('2017-06-20 0:0:0')) == -240
+        assert get_remaining_hours(parse('2019-03-12 0:0:0')) == -240
 
     def test_10days_after_plus_1sec(self):
-        assert get_remaining_hours(parse('2017-06-20 0:0:10')) == -240
+        assert get_remaining_hours(parse('2019-03-12 0:0:10')) == -240
 
 
 class TestGetText:
@@ -101,16 +101,6 @@ class TestGetText:
             '公開まで、あと 1 日です！！！\n'
             '공개까지 앞으로 1 일입니다!!!\n'
             f'{space}#kinpri #prettyrhythm'
-        )
-
-    def test_25hours_before(self):
-        text = get_text(1, 25)
-        space = self.get_space()
-        assert text == (
-            f'{WORK_NAME}\n'
-            '公開まで、あと 25 時間です！！！\n'
-            '공개까지 앞으로 25 시간입니다!!!\n'
-            f'#kinpri #prettyrhythm'
         )
 
     def test_just_day(self):
