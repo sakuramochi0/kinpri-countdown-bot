@@ -6,11 +6,13 @@ from get_tweepy import get_api
 
 # if now is 00:00:00, remaining days would be greater than 1 day
 # so we must minus 1
-RELEASE_DATE = parse('2017-06-10') - datetime.timedelta(seconds=1)
-RELEASE_DATETIME = parse('2017-06-10 00:00') - datetime.timedelta(seconds=1)
+RELEASE_DATE = parse('2019-03-02') - datetime.timedelta(seconds=1)
+RELEASE_DATETIME = parse('2019-03-02 00:00') - datetime.timedelta(seconds=1)
+WORK_NAME = '『KING OF PRISM -Shiny Seven Stars- 第I章』'
 
 
 def get_remaining_days(now=None):
+    """公開日までの残り日数を取得する。"""
     if now is None:
         now = datetime.datetime.now()
     delta = RELEASE_DATE - now
@@ -19,6 +21,7 @@ def get_remaining_days(now=None):
 
 
 def get_remaining_hours(now=None):
+    """公開日の 0:00 までの残り時間を計算する。"""
     if now is None:
         now = datetime.datetime.now()
     # see the same hour if within 30 min.
@@ -31,29 +34,21 @@ def get_remaining_hours(now=None):
     return remaining
 
 
-def tweet(screen_name='kinpricountdown'):
-    api = get_api(screen_name)
+def tweet():
+    """実際にツイートを行う。"""
     days = get_remaining_days()
     hours = get_remaining_hours()
     text = get_text(days, hours)
-    img = get_img(days)
-    if not is_hours_countdown(hours) and img:
+    img = None
+    if not is_publish_in_24_hours(hours) and img:
         res = api.update_with_media(img, status=text)
     else:
         res = api.update_status(text)
     return res
 
 
-def tweet_second(screen_name='kinpricountdown'):
-    api = get_api(screen_name)
-    days = get_remaining_days()
-    hours = get_remaining_hours()
-    text = get_text(days, hours)
-    res = api.update_status(text)
-    return res
-
-
 def get_img(days):
+    """公開直前画像のファイル名を取得する。"""
     # prepare images if 0 <= days <= 5
     if 0 <= days <= 5:
         img = 'img/kinpri-countdown-{}.png'.format(days)
@@ -62,17 +57,66 @@ def get_img(days):
     return img
 
 
-def is_hours_countdown(hours):
-    return hours % 24 != 0
+def is_publish_in_24_hours(hours: int) -> bool:
+    """公開まで1日を切っているかどうか"""
+    return hours < 24
 
 
-def get_text(days, hours):
-    # 「○日経過しました」ではなく、「○日目です」とツイートするための修正。
-    # これによって、公開日以前が正しくなくなってしまっている。
-    days -= 1
+def get_text(days: int, hours: int) -> str:
+    """ツイートテキストを構築する。"""
+    exclamation, exclamation_ko = get_exclamation_marks(days)
+    get_exclamation_marks(days)
 
-    # make the number of exclamation marks different
-    # depanding on the remaining days
+    # 100の倍数の時にクラッカーを鳴らす🎉✨
+    if days % 100 == 0:
+        celebration = '👑🌹🎉🌈✨'
+    else:
+        celebration = ''
+
+    # 空白を追加することで、重複ツイートの制限を回避
+    # 次の4つの時間帯に分ける: 0-6 / 6-12 / 12-18 / 18-24
+    space = ' ' * (datetime.datetime.now().hour // 6 % 4)
+
+    if days > 0:
+        # 公開前
+        if is_publish_in_24_hours(hours):
+            text = (
+                f'{WORK_NAME}\n'
+                f'公開まで、あと {hours} 時間です{exclamation}\n'
+                f'공개까지 앞으로 {hours} 시간입니다{exclamation_ko}\n'
+                '#kinpri #prettyrhythm'
+            )
+        else:
+            text = (
+                f'{WORK_NAME}\n'
+                f'公開まで、あと {days} 日です{exclamation}\n'
+                f'공개까지 앞으로 {days} 일입니다{exclamation_ko}\n'
+                f'{space}#kinpri #prettyrhythm'
+            )
+    elif days == 0:
+        # 公開日当日
+        text = (
+            f'✨🎉🌈 {WORK_NAME} 🌈🎉✨\n'
+            '公開日です！！！！！\n'
+            '공개 일입니다!!!!!\n'
+            f'{space}#kinpri #prettyrhythm'
+        )
+    else:
+        # 公開後
+        days *= -1
+        text = (
+            f'{celebration}\n'
+            f'{WORK_NAME}\n'
+            f'今日は公開 {days} 日目です{exclamation}\n'
+            f'오늘은 공개 {days} 일째입니다{exclamation_ko}\n'
+            f'{space}#kinpri #prettyrhythm'
+        )
+
+    return text
+
+
+def get_exclamation_marks(days: int) -> (str, str):
+    """残り日数に応じて、数を変えた「！」を生成する"""
     if 0 < days <= 10:
         exclamation_num = 3
     elif days % 10 == 0:
@@ -81,83 +125,17 @@ def get_text(days, hours):
         exclamation_num = 1
     exclamation = '！' * exclamation_num
     exclamation_ko = '!' * exclamation_num
-
-    # 100の倍数の時にクラッカーを鳴らす🎉✨
-    if days % 100 == 0:
-        celebration = '👑🌹🎉🌈✨'
-    else:
-        celebration = ''
-
-    # add an additinal space characters
-    # to avoid a duplicate status restriction
-    # there are 4 cases: 0-6 / 6-12 / 12-18 / 18-24
-    space = ' ' * (datetime.datetime.now().hour // 6 % 4)
-
-    if args.second:
-        text = ('『KING OF PRISM -PRIDE the HERO-』\n'
-                '7/22(土)上映開始劇場での公開まで\n'
-                'あと {days} 日です{exclamation}\n'
-                '#kinpri #prettyrhythm').format(
-            days=days,
-            exclamation=exclamation,
-            exclamation_ko=exclamation_ko,
-        )
-    elif days > 0:
-        if is_hours_countdown(hours):
-            text = ('『KING OF PRISM -PRIDE the HERO-』\n'
-                    '公開まで、あと {hours} 時間です{exclamation}\n'
-                    '공개까지 앞으로 {hours} 시간입니다{exclamation_ko}\n'
-                    '#kinpri #prettyrhythm').format(
-                hours=hours,
-                exclamation=exclamation,
-                exclamation_ko=exclamation_ko,
-            )
-        else:
-            text = ('『KING OF PRISM -PRIDE the HERO-』\n'
-                    '公開まで、あと {days} 日です{exclamation}\n'
-                    '공개까지 앞으로 {days} 일입니다{exclamation_ko}\n'
-                    '{space}#kinpri #prettyrhythm').format(
-                days=days,
-                exclamation=exclamation,
-                exclamation_ko=exclamation_ko,
-                space=space)
-    elif days == 0:
-        text = ('✨🎉🌈 『KING OF PRISM -PRIDE the HERO-』 🌈🎉✨\n'
-                '公開日です！！！！！\n'
-                '공개 일입니다!!!!!\n'
-                '{space}#kinpri #prettyrhythm').format(space=space)
-    else:
-        days *= -1
-        text = ('{celebration}\n'
-                '『KING OF PRISM -PRIDE the HERO-』\n'
-                '今日は公開 {days} 日目です{exclamation}\n'
-                '오늘은 공개 {days} 일째입니다{exclamation_ko}\n'
-                '{space}#kinpri #prettyrhythm').format(
-            days=days,
-            celebration=celebration,
-            exclamation=exclamation,
-            exclamation_ko=exclamation_ko,
-            space=space)
-
-    return text
+    return exclamation, exclamation_ko
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--debug', '-d', action='store_true')
-    parser.add_argument('--second', action='store_true')
     args = parser.parse_args()
 
-    if args.second:
-        # make release date 2017/07/22
-        RELEASE_DATE += datetime.timedelta(days=42)
-        RELEASE_DATETIME += datetime.timedelta(days=42)
-        if args.debug:
-            tweet_second('sakuramochi_pre')
-        else:
-            tweet_second()
-    else:
-        if args.debug:
-            tweet('sakuramochi_pre')
-        else:
-            tweet()
+    screen_name = 'kinpricountdown'
+    if args.debug:
+        screen_name = 'sakuramochi_pre'
+    api = get_api(screen_name)
+
+    tweet()
