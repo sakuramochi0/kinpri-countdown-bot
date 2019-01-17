@@ -39,7 +39,7 @@ def tweet():
     days = get_remaining_days()
     hours = get_remaining_hours()
     text = get_text(days, hours)
-    img = get_img(days)
+    img = None
     if not is_publish_in_24_hours(hours) and img:
         res = api.update_with_media(img, status=text)
     else:
