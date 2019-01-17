@@ -1,13 +1,13 @@
 import datetime
 from dateutil.parser import parse
-from twitter_kinpri_countdown_bot import get_remaining_days, get_remaining_hours, get_text
+from twitter_kinpri_countdown_bot import get_remaining_days, get_remaining_hours, get_text, WORK_NAME
 
 
 class TestGetRemainingDays:
 
     def test_specs(self):
         assert get_remaining_days() == \
-            (parse('2017-06-10') - datetime.datetime.now()).days + 1
+               (parse('2017-06-10') - datetime.datetime.now()).days + 1
 
     def test_10days_before(self):
         assert get_remaining_days(parse('2017-05-31 0:0:0')) == 10
@@ -69,62 +69,76 @@ class TestGetRemainingHours:
 
 class TestGetText:
 
-    def get_space(self):
+    @staticmethod
+    def get_space():
         return ' ' * (datetime.datetime.now().hour // 6 % 4)
-        
+
     def test_11days_before(self):
         text = get_text(11, 264)
         space = self.get_space()
-        assert text == ('『KING OF PRISM -PRIDE the HERO-』\n'
-                        '公開まで、あと 11 日です！\n'
-                        '공개까지 앞으로 11 일입니다!\n'
-                        '{}#kinpri #prettyrhythm'.format(space))
+        assert text == (
+            f'{WORK_NAME}\n'
+            '公開まで、あと 11 日です！\n'
+            '공개까지 앞으로 11 일입니다!\n'
+            f'{space}#kinpri #prettyrhythm'
+        )
 
     def test_10days_before(self):
         text = get_text(10, 240)
         space = self.get_space()
-        assert text == ('『KING OF PRISM -PRIDE the HERO-』\n'
-                        '公開まで、あと 10 日です！！！\n'
-                        '공개까지 앞으로 10 일입니다!!!\n'
-                        '{}#kinpri #prettyrhythm'.format(space))
+        assert text == (
+            f'{WORK_NAME}\n'
+            '公開まで、あと 10 日です！！！\n'
+            '공개까지 앞으로 10 일입니다!!!\n'
+            f'{space}#kinpri #prettyrhythm'
+        )
 
     def test_1days_before(self):
         text = get_text(1, 24)
         space = self.get_space()
-        assert text == ('『KING OF PRISM -PRIDE the HERO-』\n'
-                        '公開まで、あと 1 日です！！！\n'
-                        '공개까지 앞으로 1 일입니다!!!\n'
-                        '{}#kinpri #prettyrhythm'.format(space))
+        assert text == (
+            f'{WORK_NAME}\n'
+            '公開まで、あと 1 日です！！！\n'
+            '공개까지 앞으로 1 일입니다!!!\n'
+            f'{space}#kinpri #prettyrhythm'
+        )
 
     def test_25hours_before(self):
         text = get_text(1, 25)
         space = self.get_space()
-        assert text == ('『KING OF PRISM -PRIDE the HERO-』\n'
-                        '公開まで、あと 25 時間です！！！\n'
-                        '공개까지 앞으로 25 시간입니다!!!\n'
-                        '{}#kinpri #prettyrhythm'.format(space))
+        assert text == (
+            f'{WORK_NAME}\n'
+            '公開まで、あと 25 時間です！！！\n'
+            '공개까지 앞으로 25 시간입니다!!!\n'
+            f'#kinpri #prettyrhythm'
+        )
 
     def test_just_day(self):
         text = get_text(0, 0)
         space = self.get_space()
-        assert text == \
-            ('✨🎉🌈 『KING OF PRISM -PRIDE the HERO-』 🌈🎉✨\n'
-             '公開日です！！！！！\n'
-             '공개 일입니다!!!!!\n'
-             '{}#kinpri #prettyrhythm'.format(space))
+        assert text == (
+            f'✨🎉🌈 {WORK_NAME} 🌈🎉✨\n'
+            '公開日です！！！！！\n'
+            '공개 일입니다!!!!!\n'
+            f'{space}#kinpri #prettyrhythm'
+        )
 
     def test_10days_after(self):
         text = get_text(-10, -240)
         space = self.get_space()
-        assert text == ('『KING OF PRISM -PRIDE the HERO-』\n'
-                        '公開から、10 日が経過しました！！\n'
-                        '개봉 후 10 일 경과했습니다!!\n'
-                        '{}#kinpri #prettyrhythm'.format(space))
+        assert text == (
+            f'\n{WORK_NAME}\n'
+            '今日は公開 10 日目です！！\n'
+            '오늘은 공개 10 일째입니다!!\n'
+            f'{space}#kinpri #prettyrhythm'
+        )
 
     def test_11days_after(self):
         text = get_text(-11, -264)
         space = self.get_space()
-        assert text == ('『KING OF PRISM -PRIDE the HERO-』\n'
-                        '公開から、11 日が経過しました！\n'
-                        '개봉 후 11 일 경과했습니다!\n'
-                        '{}#kinpri #prettyrhythm'.format(space))
+        assert text == (
+            f'\n{WORK_NAME}\n'
+            '今日は公開 11 日目です！\n'
+            '오늘은 공개 11 일째입니다!\n'
+            f'{space}#kinpri #prettyrhythm'
+        )
