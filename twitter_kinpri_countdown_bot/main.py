@@ -1,14 +1,15 @@
-#!/usr/bin/env python3
-import datetime
 import argparse
+import datetime
+
 from dateutil.parser import parse
+# noinspection PyUnresolvedReferences
 from get_tweepy import get_api
 
 # if now is 00:00:00, remaining days would be greater than 1 day
 # so we must minus 1
 RELEASE_DATE = parse('2019-03-02') - datetime.timedelta(seconds=1)
 RELEASE_DATETIME = parse('2019-03-02 00:00') - datetime.timedelta(seconds=1)
-WORK_NAME = '『KING OF PRISM -Shiny Seven Stars- 第I章』'
+WORK_NAME = '『KING OF PRISM -Shiny Seven Stars- I プロローグ×ユキノジョウ×タイガ』'
 
 
 def get_remaining_days(now=None):
