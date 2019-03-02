@@ -7,9 +7,12 @@ from get_tweepy import get_api
 
 # if now is 00:00:00, remaining days would be greater than 1 day
 # so we must minus 1
-RELEASE_DATE = parse('2019-03-02') - datetime.timedelta(seconds=1)
-RELEASE_DATETIME = parse('2019-03-02 00:00') - datetime.timedelta(seconds=1)
-WORK_NAME = '『KING OF PRISM -Shiny Seven Stars- I プロローグ×ユキノジョウ×タイガ』'
+RELEASE_DATE = parse('2019-03-23') - datetime.timedelta(seconds=1)
+RELEASE_DATETIME = parse('2019-03-23 00:00') - datetime.timedelta(seconds=1)
+#WORK_NAME = '『KING OF PRISM -Shiny Seven Stars- I プロローグ×ユキノジョウ×タイガ』'
+WORK_NAME = '『KING OF PRISM -Shiny Seven Stars- II カケル×ジョージ×ミナト』'
+#WORK_NAME = '『KING OF PRISM -Shiny Seven Stars- III レオ×ユウ×アレク』'
+#WORK_NAME = '『KING OF PRISM -Shiny Seven Stars- IV ルヰ×シン×Unknown』'
 
 
 def get_remaining_days(now=None):
