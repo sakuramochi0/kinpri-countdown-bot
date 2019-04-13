@@ -11,12 +11,12 @@ from get_tweepy import get_api
 #WORK_NAME = '『KING OF PRISM -Shiny Seven Stars- II カケル×ジョージ×ミナト』'
 #RELEASE_DATE = parse('2019-03-23') - datetime.timedelta(seconds=1)
 #RELEASE_DATETIME = parse('2019-03-23 00:00') - datetime.timedelta(seconds=1)
-WORK_NAME = '『KING OF PRISM -Shiny Seven Stars- III レオ×ユウ×アレク』'
-RELEASE_DATE = parse('2019-04-13') - datetime.timedelta(seconds=1)
-RELEASE_DATETIME = parse('2019-04-13 00:00') - datetime.timedelta(seconds=1)
-#WORK_NAME = '『KING OF PRISM -Shiny Seven Stars- IV ルヰ×シン×Unknown』'
-#RELEASE_DATE = parse('2019-05-04') - datetime.timedelta(seconds=1)
-#RELEASE_DATETIME = parse('2019-05-04 00:00') - datetime.timedelta(seconds=1)
+#WORK_NAME = '『KING OF PRISM -Shiny Seven Stars- III レオ×ユウ×アレク』'
+#RELEASE_DATE = parse('2019-04-13') - datetime.timedelta(seconds=1)
+#RELEASE_DATETIME = parse('2019-04-13 00:00') - datetime.timedelta(seconds=1)
+WORK_NAME = '『KING OF PRISM -Shiny Seven Stars- IV ルヰ×シン×Unknown』'
+RELEASE_DATE = parse('2019-05-04') - datetime.timedelta(seconds=1)
+RELEASE_DATETIME = parse('2019-05-04 00:00') - datetime.timedelta(seconds=1)
 
 
 def get_remaining_days(now=None):
