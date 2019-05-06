@@ -111,7 +111,7 @@ def get_text(days: int, hours: int) -> str:
         )
     else:
         # 公開後
-        days *= -1
+        days = days * (-1) + 1
         text = (
             f'{celebration}\n'
             f'{WORK_NAME}\n'
