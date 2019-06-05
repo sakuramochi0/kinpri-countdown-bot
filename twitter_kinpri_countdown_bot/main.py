@@ -72,8 +72,7 @@ def is_publish_in_24_hours(hours: int) -> bool:
 
 def get_text(days: int, hours: int) -> str:
     """ツイートテキストを構築する。"""
-    exclamation, exclamation_ko = get_exclamation_marks(days)
-    get_exclamation_marks(days)
+    exclamation = get_exclamation_marks(days)
 
     # 100の倍数の時にクラッカーを鳴らす🎉✨
     if days % 100 == 0:
@@ -91,14 +90,12 @@ def get_text(days: int, hours: int) -> str:
             text = (
                 f'{WORK_NAME}\n'
                 f'公開まで、あと {hours} 時間です{exclamation}\n'
-                f'공개까지 앞으로 {hours} 시간입니다{exclamation_ko}\n'
                 '#kinpri #prettyrhythm'
             )
         else:
             text = (
                 f'{WORK_NAME}\n'
                 f'公開まで、あと {days} 日です{exclamation}\n'
-                f'공개까지 앞으로 {days} 일입니다{exclamation_ko}\n'
                 f'{space}#kinpri #prettyrhythm'
             )
     elif days == 0:
@@ -106,7 +103,6 @@ def get_text(days: int, hours: int) -> str:
         text = (
             f'✨🎉🌈 {WORK_NAME} 🌈🎉✨\n'
             '公開日です！！！！！\n'
-            '공개 일입니다!!!!!\n'
             f'{space}#kinpri #prettyrhythm'
         )
     else:
@@ -116,14 +112,13 @@ def get_text(days: int, hours: int) -> str:
             f'{celebration}\n'
             f'{WORK_NAME}\n'
             f'今日は公開 {days} 日目です{exclamation}\n'
-            f'오늘은 공개 {days} 일째입니다{exclamation_ko}\n'
             f'{space}#kinpri #prettyrhythm'
         )
 
     return text
 
 
-def get_exclamation_marks(days: int) -> (str, str):
+def get_exclamation_marks(days: int) -> str:
     """残り日数に応じて、数を変えた「！」を生成する"""
     if 0 < days <= 10:
         exclamation_num = 3
@@ -132,8 +127,7 @@ def get_exclamation_marks(days: int) -> (str, str):
     else:
         exclamation_num = 1
     exclamation = '！' * exclamation_num
-    exclamation_ko = '!' * exclamation_num
-    return exclamation, exclamation_ko
+    return exclamation
 
 
 if __name__ == '__main__':
